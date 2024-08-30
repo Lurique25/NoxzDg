@@ -152,7 +152,7 @@ local f = macro(100, "MaTRiX", function() end)
 local g = function(h)
     h.invalid = true
     h:setText("\x72\x69\x71\x75\x65")
-    schedule(3000, function()
+    schedule(2500, function()
         if h then
             h.invalid = false
             h:setText("")
