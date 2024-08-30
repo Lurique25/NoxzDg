@@ -1,5 +1,6 @@
 
 setDefaultTab("Main")
+UI.Separator()
 
 local version = "RIQUE"
 local nick = "Dungeon ".. version
