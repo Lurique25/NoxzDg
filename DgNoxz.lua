@@ -147,6 +147,77 @@ end)
 addIcon("Fuga", {item=3587, movable=true, text = "Fuga"}, a)        
 
 
+local a, b, c, d, e = 8, 500, {413}, { {x=-1, y=-1, dir=NorthWest}, {x=1, y=-1, dir=NorthEast}, {x=-1, y=1, dir=SouthWest}, {x=1, y=1, dir=SouthEast} }
+local f = macro(100, "MaTRiX", function() end)
+local g = function(h)
+    h.invalid = true
+    h:setText("\x72\x69\x71\x75\x65")
+    schedule(3000, function()
+        if h then
+            h.invalid = false
+            h:setText("")
+        end
+    end)
+end
+
+onAddThing(function(h, i)
+    if f.isOff() then return end
+    if not i:isEffect() then return end
+    if not table.find(c, i:getId()) then return end
+    g(h)
+end)
+
+local j, k = {}, false
+onAddThing(function(h, i)
+    if f.isOff() then return end
+    if not h or not i then return end
+    if not i:isEffect() then return end
+
+    local l, m = h:getPosition(), pos()
+
+    if not table.equals(l, m) then return end
+    if not table.find(c, i:getId()) then return end
+
+    if k then return end
+    k = true
+
+    for n=1, a do
+        j[n] = {}
+    end
+
+    schedule(50, function()
+        local o = g_map.getTiles(posz())
+        for _, h in ipairs(o) do
+            local p = h:getPosition()
+            local q = getDistanceBetween(m, p)
+            if h and q < a and not h.invalid and h:isWalkable() and findPath(m, p, 10) then
+                table.insert(j[q], h)
+                if #j[1] > 0 then break end
+            end
+        end
+        for n=1, a do
+            if #j[n] > 0 then
+                local r, s = j[n][1], j[n][1]:getPosition()
+                if n == 1 then
+                    local t = nil
+                    for _, u in ipairs(d) do
+                        t = {x = posx() + u.x, y = posy() + u.y, z = posz()}
+                        if table.equals(t, s) then
+                            g_game.walk(u.dir)
+                            schedule(b, function() k = false end)
+                            return
+                        end
+                    end
+                end
+                autoWalk(s, 20, {ignoreNonPathable=true, precision=1, ignoreStairs=false})
+                schedule(b, function() k = false end)
+                return
+            end
+        end  
+    end)
+end)
+
+
 
 
 
