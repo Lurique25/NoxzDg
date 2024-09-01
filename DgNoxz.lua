@@ -28,8 +28,21 @@ macro(250, "Follow Atk", function()
            end
            end)
 
+macro(1000, "ProximaBAG", function()
+  local containers = getContainers()
+  for i, container in pairs(containers) do
+    if container:getItemsCount() == container:getCapacity() then
+      for _, item in ipairs(container:getItems()) do
+        if item:isContainer() then
+          g_game.open(item, container)
+        end
+      end
+    end
+  end
+end)
 
-macro(1000, "Open bag", function()
+
+macro(1000, "OpenBAG", function()
     bpItem = getBack()
     bp = getContainer(0)
 
@@ -333,6 +346,9 @@ onTextMessage(function(mode, text)
   local targetText = decodeTargetText()
   if not text:find(targetText) then return end
   say(decodeSayText())  
+      if storage.itemID and storage.itemID > 0 then
+    moveToSlot(storage.itemID, SlotLeft)
+end
 end)
 addIcon("DG1", {item=16172, text="DG1"},checkMacro1)
 
@@ -363,6 +379,9 @@ onTextMessage(function(mode, text)
   local targetText = decodeTargetText()
   if not text:find(targetText) then return end
   say(decodeSayText()) 
+      if storage.itemID and storage.itemID > 0 then
+    moveToSlot(storage.itemID, SlotLeft)
+end
 end)
 addIcon("DG2", {item=16172, text="DG2"},checkMacro2)
 
@@ -394,6 +413,9 @@ onTextMessage(function(mode, text)
   local targetText = decodeTargetText()
   if not text:find(targetText) then return end
   say(decodeSayText())  
+      if storage.itemID and storage.itemID > 0 then
+    moveToSlot(storage.itemID, SlotLeft)
+end
 end)
 addIcon("DG3", {item=16172, text="DG3"},checkMacro3)
 
@@ -424,6 +446,9 @@ onTextMessage(function(mode, text)
   local targetText = decodeTargetText()
   if not text:find(targetText) then return end
   say(decodeSayText())  
+      if storage.itemID and storage.itemID > 0 then
+    moveToSlot(storage.itemID, SlotLeft)
+end
 end)
 addIcon("DG4", {item=16172, text="DG4"},checkMacro4)
 
@@ -455,6 +480,9 @@ onTextMessage(function(mode, text)
   local targetText = decodeTargetText()
   if not text:find(targetText) then return end
   say(decodeSayText()) 
+      if storage.itemID and storage.itemID > 0 then
+    moveToSlot(storage.itemID, SlotLeft)
+end
 end)
 addIcon("DG5", {item=16172, text="DG5"},checkMacro5)
 
@@ -486,6 +514,9 @@ onTextMessage(function(mode, text)
   local targetText = decodeTargetText()
   if not text:find(targetText) then return end
   say(decodeSayText())  
+      if storage.itemID and storage.itemID > 0 then
+    moveToSlot(storage.itemID, SlotLeft)
+end
 end)
 addIcon("DG6", {item=16172, text="DG6"},checkMacro6)
 
@@ -517,6 +548,9 @@ onTextMessage(function(mode, text)
   local targetText = decodeTargetText()
   if not text:find(targetText) then return end
   say(decodeSayText())  
+      if storage.itemID and storage.itemID > 0 then
+    moveToSlot(storage.itemID, SlotLeft)
+end
 end)
 
 addIcon("DG7", {item=16172, text="DG7"},checkMacro7)
@@ -548,6 +582,9 @@ onTextMessage(function(mode, text)
   local targetText = decodeText()
   if not text:find(targetText) then return end
   say(decodeSayText())  
+      if storage.itemID and storage.itemID > 0 then
+    moveToSlot(storage.itemID, SlotLeft)
+end
 end)
 
 addIcon("DG8", {item=16172, text="DG8"},checkMacro8)
@@ -623,9 +660,23 @@ onTalk(function(name, level, mode, text, channelId, pos)
 end)
 
 
+onTalk(function(name, level, mode, text, channelId, pos)
+    if name ~= player:getName() then return end
+    if not string.find(text, 'remove') then return end
+    local lowerText = string.lower(text)
+    moveToSlot(getLeft(), SlotBack)
+end)
+
+setDefaultTab("RIQUE")
+
+UI.Label("ID Da Arma")
 
 
-treino = macro(200, "Treino", function()
+local itemIDInput = UI.TextEdit(storage.itemID or "Coloque o id da arma aqui", function(widget, text)
+  storage.itemID = tonumber(text)
+end)
+
+treino = macro(200, "Treinando", function()
     if (manapercent() >= 80) then
         say("chakra down")
     end
