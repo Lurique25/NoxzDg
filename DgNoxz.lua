@@ -28,19 +28,6 @@ macro(250, "Follow Atk", function()
            end
            end)
 
-macro(1000, "ProximaBAG", function()
-  local containers = getContainers()
-  for i, container in pairs(containers) do
-    if container:getItemsCount() == container:getCapacity() then
-      for _, item in ipairs(container:getItems()) do
-        if item:isContainer() then
-          g_game.open(item, container)
-        end
-      end
-    end
-  end
-end)
-
 
 macro(1000, "OpenBAG", function()
     bpItem = getBack()
