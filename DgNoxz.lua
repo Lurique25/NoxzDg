@@ -671,7 +671,7 @@ end)
 
 onTalk(function(name, level, mode, text, channelId, pos)
     if mode == 4 and afkMsglabel4 == true and text == '\x69\x64\x65\x6E\x74\x69\x64\x61\x64\x65' then
-        say('[Dono]:Rique, contato discord: riquezerah')
+        say('[Dono]:FavRo')
         delay(200)
         return true
     end
